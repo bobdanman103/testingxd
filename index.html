@@ -83,12 +83,16 @@ ctx.drawImage(plyr, 300, 200,200,200);
 
 
 
-document.getElementById("player").src = framesArr[noob];
+
 
 plyr = document.getElementById("player");
 
+
+if (noob > 10){noob = 0;}
+
 noob = noob + 1;
-if (noob > framesArr.length-1){noob = 0;}
+
+document.getElementById("player").src = framesArr[noob];
 
 }//End of FUNCTION
 
@@ -107,6 +111,7 @@ if (noob > framesArr.length-1){noob = 0;}
 
 
 </script>
+
 
 </body>
 </html>
