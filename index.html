@@ -30,7 +30,7 @@ html, body {
 <script>
 
 
-var myVar = setInterval(move, 80);
+var myVar = setInterval(move, 20);
 
 
 function clickfunc(){
@@ -44,7 +44,7 @@ var w = window.innerWidth;
 var h = window.innerHeight;
  
 c.width  = w;
-c.height = h - 100;
+c.height = h;
 
 var scalew = (w/800);
 var scaleh = (h-100)/(400);
@@ -59,7 +59,7 @@ scalew = (w/800);
 scaleh = (h-100)/(400);
 
 c.width  = w;
-c.height = h - 100;
+c.height = h;
 ctx.scale(scalew,scaleh);
 
 
