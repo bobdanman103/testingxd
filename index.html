@@ -77,19 +77,14 @@ function move() {
 var bgimg = document.getElementById("grassland");
 ctx.drawImage(bgimg, 0, 0,800,400);
 
-
-
-
-plyr = document.getElementById("player");
 	
-ctx.drawImage(plyr, 300, 200,200,200);
+ctx.drawImage(plyr, 300 + noob, 200,200,200);
 
 
-if (noob > 10){noob = 0;}
+if (noob > 100){noob = 0;}
 
 noob = noob + 1;
 
-document.getElementById("player").src = framesArr[noob];
 
 }//End of FUNCTION
 
