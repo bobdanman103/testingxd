@@ -25,10 +25,11 @@ html, body {
 <script>
 var myVar = setInterval(move, 20);
 function clickfunc(){
+	myMusic = new sound("gametheme.mp3");
+myMusic.play();
 }
 
-myMusic = new sound("gametheme.mp3");
-myMusic.play();
+
 
 
 function sound(src) {
