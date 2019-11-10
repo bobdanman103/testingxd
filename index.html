@@ -1,7 +1,95 @@
 <html>
-<body>
+<head>
+
+<style>
+html, body {
+    max-width: 100%;
+    overflow-y: hidden;
+	overflow-x: hidden;
+}
+</style>
+
+
+</head>
+<body style="background-color:black;">
+
+<h1 style="color:white;" id="demo"></h1>
+
+	
+<canvas id="myCanvas" onload ="move()" onclick = "clickfunc()" onkeydown="uniKeyCode(event)" width="800" height="400" style="border:1px solid #d3d3d3;">
+</canvas>
+
+<img id="grassland"  style="visibility:hidden" src="https://i.ibb.co/HPcgvQ3/New-Project-7.png" alt="">
+
+<img id="player"  style="visibility:hidden" src="https://i.ibb.co/GJpp0Ch/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-1.png" alt="">
+
+<script>
+var myVar = setInterval(move, 20);
+function clickfunc(){
+}
+
+myMusic = new sound("gametheme.mp3");
+myMusic.play();
+
+
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+        this.sound.play();
+    }
+    this.stop = function(){
+        this.sound.pause();
+    }    
+}
+
+var c = document.getElementById("myCanvas");
+   
+var ctx = c.getContext("2d");
+var w = window.innerWidth;
+var h = window.innerHeight;
+ 
+c.width  = w;
+c.height = h;
+var scalew = (w/800);
+var scaleh = (h-30)/(400);
+ctx.scale(scalew,scaleh);
+window.onresize = function(event) {
+w = window.innerWidth;
+h = window.innerHeight;
   
-<h2>HTML Image</h2>
-<img src="yeet.gif" alt="Trulli" width="1000" height="1000">
+scalew = (w/800);
+scaleh = (h-30)/(400);
+c.width  = w;
+c.height = h;
+ctx.scale(scalew,scaleh);
+};
+var framesArr = ["https://i.ibb.co/GJpp0Ch/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-1.png","https://i.ibb.co/9tn2b8d/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-2.png","https://i.ibb.co/jHy99Vs/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-3.png","https://i.ibb.co/v3pnpGb/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-4.png","https://i.ibb.co/Ykm2Lb3/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-5.png","https://i.ibb.co/p1gYtzn/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-6.png","https://i.ibb.co/ZM6wkWc/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-7.png","https://i.ibb.co/rt3xR6j/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-8.png","https://i.ibb.co/hC8gLnm/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-9.png","https://i.ibb.co/3y53sjn/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-10.png","https://i.ibb.co/Nmd3pHV/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-11.png","https://i.ibb.co/h2yvpn4/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-12.png","https://i.ibb.co/Z2kLvTQ/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-13.png","https://i.ibb.co/G0BSn19/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-14.png","https://i.ibb.co/1KHR151/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-15.png"]
+var noob = 0; 
+var plyr = document.getElementById("player");
+function move() {
+//Background Image
+var bgimg = document.getElementById("grassland");
+ctx.drawImage(bgimg, 0, 0,800,400);
+	
+ctx.drawImage(plyr, 300 + noob, 200,200,200);
+if (noob > 100){noob = 0;}
+noob = noob + 1;
+}//End of FUNCTION
+ //Move events
+ document.onkeydown = function(e) {
+ 
+ }//End of keydown function
+ 
+  document.onkeyup = function(e) {
+  
+  }
+</script>
+
+
 </body>
 </html>
