@@ -16,22 +16,39 @@ html, body {
 <h1 style="color:white;" id="demo"></h1>
 
 	
+
 <canvas id="myCanvas" onload ="move()" onclick = "clickfunc()" onkeydown="uniKeyCode(event)" width="800" height="400" style="border:1px solid #d3d3d3;">
 </canvas>
 
-<img id="grassland"  style="visibility:hidden" src="https://i.ibb.co/HPcgvQ3/New-Project-7.png" alt="">
 
-<img id="player"  style="visibility:hidden" src="https://i.ibb.co/PYf6N83/Screenshot-1.png" alt="">
+
+<img id="grassland"  style="visibility:hidden" src="https://i.ibb.co/2txdBTZ/animated-background-european-city-street-buildings-trees-lampposts-flat-animation-parallax-footage-parallaxy-116271858.png" alt="">
+
+
+
+<img id="player"  style="visibility:hidden" src="https://i.ibb.co/b7djdNr/1.png" alt="">
+
+<img id="swordhit1"  style="visibility:hidden" src="https://i.ibb.co/b7djdNr/1.png" alt="">
+<img id="swordhit2"  style="visibility:hidden" src="https://i.ibb.co/HXFCRWn/2.png" alt="">
+<img id="swordhit3"  style="visibility:hidden" src="https://i.ibb.co/7CCcNwK/3.png" alt="">
+<img id="swordhit4"  style="visibility:hidden" src="https://i.ibb.co/NLq03RC/4.png" alt="">
+<img id="swordhit5"  style="visibility:hidden" src="https://i.ibb.co/xYFtP3b/5.png" alt="">
+<img id="swordhit6"  style="visibility:hidden" src="https://i.ibb.co/cw2m1B6/6.png" alt="">
+<img id="swordhit7"  style="visibility:hidden" src="https://i.ibb.co/NCrfGQL/7.png" alt="">
+<img id="swordhit8"  style="visibility:hidden" src="https://i.ibb.co/SQpNhFG/8.png" alt="">
+<img id="swordhit9"  style="visibility:hidden" src="https://i.ibb.co/4RNZFFq/9.png" alt="">
+<img id="swordhit10"  style="visibility:hidden" src="https://i.ibb.co/vmGpdQV/10.png" alt="">
+<img id="swordhit11"  style="visibility:hidden" src="https://i.ibb.co/7n9tvHk/11.png" alt="">
+<img id="swordhit12"  style="visibility:hidden" src="https://i.ibb.co/89Z068H/12.png" alt="">
+<img id="swordhit13"  style="visibility:hidden" src="https://i.ibb.co/ZHcqSC4/13.png" alt="">
+<img id="swordhit14"  style="visibility:hidden" src="https://i.ibb.co/rcpSsMM/14.png" alt="">
 
 
 <script>
 var myVar = setInterval(move, 20);
 function clickfunc(){
 myMusic = new sound("jump.mp3");
-
 }
-
-
 function sound(src) {
     this.sound = document.createElement("audio");
     this.sound.src = src;
@@ -46,7 +63,6 @@ function sound(src) {
         this.sound.pause();
     }    
 }
-
 var c = document.getElementById("myCanvas");
    
 var ctx = c.getContext("2d");
@@ -68,41 +84,111 @@ c.width  = w;
 c.height = h;
 ctx.scale(scalew,scaleh);
 };
-
-
 var x = 300; 
-var y = 200;
+var y = 170;
 var plyr = document.getElementById("player");
-
 var keys = [];
-
 var jump = false; 
 
+var action = "idle";
+var inputBuffer = 0;
+var bufferTimer = 0;
+
+actionTimer = 0;
 function move() {
 //Background Image
+
+//Background
 var bgimg = document.getElementById("grassland");
 ctx.drawImage(bgimg, 0, 0,800,400);
-	
-ctx.drawImage(plyr, x, y,200,200);
 
-if (keys[39] == true){x = x + 5;} //Right
 
-if (keys[37] == true){x = x - 5;} //Left
+var swordhit1 = document.getElementById("swordhit1");
+var swordhit2 = document.getElementById("swordhit2");
+var swordhit3 = document.getElementById("swordhit3");
+var swordhit4 = document.getElementById("swordhit4");
+var swordhit5 = document.getElementById("swordhit5");
+var swordhit6 = document.getElementById("swordhit6");
+var swordhit7 = document.getElementById("swordhit7");
+var swordhit8 = document.getElementById("swordhit8");
+var swordhit9 = document.getElementById("swordhit9");
+var swordhit10 = document.getElementById("swordhit10");
+var swordhit11 = document.getElementById("swordhit11");
+var swordhit12 = document.getElementById("swordhit12");
+var swordhit13 = document.getElementById("swordhit13");
+var swordhit14 = document.getElementById("swordhit14");
 
-if (keys[38] == true){jump = true; myMusic.play();} //Up
+
+
+//39 right
+//37 left
+//40 down
+//38 up
+//32 space
+//myMusic.play()
+
+
+
+if (action == "idle"){
+ctx.drawImage(plyr, x, y,240,200);}
+
+
+var noobarray = [swordhit1, swordhit2, swordhit3, swordhit4, swordhit5, swordhit6, swordhit7, swordhit8, swordhit9, swordhit9, swordhit10,swordhit11,swordhit12,swordhit13,swordhit14];
+
+if (action == "basic"){
+
+actionTimer+= 0.6
+
+ctx.drawImage(noobarray[Math.round(actionTimer)], x, y,240,200);
+
+if (actionTimer > 14){action = "idle"; actionTimer = 0;}
+
+}
+
 
 document.onkeydown = function(e) {
+	if (actionTimer == 0){
 		keys[e.keyCode] = true;
+        inputBuffer = true; 
+        }
 } 
-
 document.onkeyup = function(e) {
 		keys[e.keyCode] = false;
 }
+
+if (inputBuffer == true){
+	bufferTimer++; 
+    if (bufferTimer > 5){bufferTimer = 0; inputBuffer = false;}
+    
+    if (keys[39] == true){action = "moveright";}
+    if (keys[37] == true){action = "moveleft";}
+    if (keys[32] == true){action = "basic";}
+    if (keys[32] == true && keys[39] == true){action = "rightattack"; inputBuffer = false;}
+    if (keys[32] == true && keys[37] == true){action = "leftattack"; inputBuffer = false;}
+    
+  
+
+} //End of INPUT BUFFER
 	
     
-    
+//actions
+if (action == "moveright"){
+	if (keys[39] == true){x = x + 5}
+    else{action = "idle"}
+}
+
+if (action == "moveleft"){
+	if (keys[37] == true){x = x - 5}
+    else{action = "idle"}
+}
 
 
+
+
+ctx.font = "30px Arial";
+ctx.fillText(keys[39], 10, 50);
+ctx.fillText(keys[32], 10, 100);
+ctx.fillText(action, 10, 150);
 }//End of FUNCTION
  
 </script>
