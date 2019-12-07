@@ -31,7 +31,6 @@ var myVar = setInterval(move, 20);
 function clickfunc(){
 clickos = true; 
 myMusic = new sound("saturn.mp3");
-myMusic.play();
 }
 	
 function sound(src) {
@@ -184,7 +183,7 @@ if (keys[39] == true){bgx = bgx - speed;} //Right
 
 if (keys[37] == true){bgx = bgx + speed;} //Left
 
-if (keys[38] == true){jump = true;} //Up
+if (keys[38] == true){jump = true; myMusic.play();} //Up
 
 
 bgy = bgy - 10;
