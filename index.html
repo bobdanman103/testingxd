@@ -1,217 +1,256 @@
+
 <html>
+
+
+
+
 <head>
 
+
 <style>
+
+
 html, body {
-    max-width: 100%;
-    overflow-y: hidden;
+
+
+   max-width: 100%;
+
+
+   overflow-y: hidden;
+
+
 	overflow-x: hidden;
+
+
 }
+
 </style>
 
 
 </head>
+
+
 <body style="background-color:black;">
 
 <h1 style="color:white;" id="demo"></h1>
 
-	
-<canvas id="myCanvas" onload ="move()" onclick = "clickfunc()" onkeydown="uniKeyCode(event)" width="800" height="400" style="border:1px solid cyan;">
+
+<canvas id="myCanvas" onload ="move()" onclick = "clickfunc()" onkeydown="uniKeyCode(event)" width="800" height="400" style="border:1px solid #d3d3d3;">
+
+
 </canvas>
 
+<img id="grassland"  style="visibility:hidden" src="https://i.ibb.co/HPcgvQ3/New-Project-7.png" alt="">
 
-<img id="grassland"  style="visibility:hidden" src="https://i.ibb.co/6HnM21p/bridge-of-eldin-new.jpg" alt="">
-
-<img id="player"  style="visibility:hidden" src="https://i.ibb.co/PYf6N83/Screenshot-1.png" alt="">
-
+<img id="player"  style="visibility:hidden" src="https://i.ibb.co/GJpp0Ch/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-1.png" alt="">
 
 <script>
-var clickos = false;
+
+
 var myVar = setInterval(move, 20);
-function clickfunc(){
-clickos = true; 
-myMusic = new sound("saturn.mp3");
-}
-	
-function sound(src) {
-    this.sound = document.createElement("audio");
-    this.sound.src = src;
-    this.sound.setAttribute("preload", "auto");
-    this.sound.setAttribute("controls", "none");
-    this.sound.style.display = "none";
-    document.body.appendChild(this.sound);
-    this.play = function(){
-        this.sound.play();
-    }
-    this.stop = function(){
-        this.sound.pause();
-    }    
-}
-
-var c = document.getElementById("myCanvas");
-   
-var ctx = c.getContext("2d");
-var w = window.innerWidth;
-var h = window.innerHeight;
-c.width  = w;
-c.height = h;
-var scalew = (w/800);
-var scaleh = (h-30)/(400);
-ctx.scale(scalew,scaleh);
-window.onresize = function(event) {
-w = window.innerWidth;
-h = window.innerHeight;
-  
-scalew = (w/800);
-scaleh = (h-30)/(400);
-c.width  = w;
-c.height = h;
-ctx.scale(scalew,scaleh);
-};
-
-
-var bgx = 0;
-var bgy = 0; 
-
-var acc = 23;
-
-var jump = false;
-
-var ground = 0; 
-
-var plyr = document.getElementById("player");
-
-var hit = false;
-
-var keys = [];
-
-var speed = 5;
-
-var block = function(x,y,w,h) {
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.h = h;
-};
-
-block.prototype.draw = function() {
-
-    ctx.fillStyle = "#fc0303"
-    ctx.fillRect(this.x + bgx, this.y + bgy, this.w, this.h);
-    
-    
-    if (this.x + bgx < 350 && this.x + this.w + bgx > 350){
-    	if (this.y + bgy < 350 && this.y + bgy + this.h > 340){bgx = 0;}
-    } //Approach from right
-    
-    
-     
-    if (this.x + bgx < 350 && this.x + this.w + bgx > 320){
-    	if (this.y + bgy > 350 && this.y + bgy < 360){bgy = bgy + 10;}
-    } //Approach from top
-    
-    
-   
-    
-    //ctx.font = "30px Arial";
-    //ctx.fillText(this.x + bgx - 350, 200, 50);
-    
-
-};
-
-block.prototype.move = function() {
-		
-};
-
-var blockArray = [];
 
 
 function clickfunc(){
-//senkoArray.push(new senko(200, 100));
-}
-
-//blockArray.push(new block(400, 260,120,90));
-
-blockArray.push(new block(600, 260,120,90));
-
-//blockArray.push(new block(600, 160,120,190));
 
 
-function move() {
-//Background Image
-var bgimg = document.getElementById("grassland");
-//ctx.drawImage(bgimg, 0, 0,1600,800);
-	
-//ctx.drawImage(plyr, 300 + noob, 200,200,200);
+	myMusic = new sound("gametheme.mp3");
 
-//Speed
-bgx = bgx - 5;
-	
 
 myMusic.play();
 
-//background
-ctx.fillStyle = "#2ae8d5";
-ctx.fillRect(0, 0, 1000, 1000);
-
-//ground
-ctx.fillStyle = "#474a48";
-ctx.fillRect(0, 347 + bgy, 1000, 1000);
-
-//Deco
-ctx.fillStyle = "#022fb8";
-
-for (var i = -50; i < 50; i++){
-ctx.fillRect(i*50 + bgx,200 + bgy,20,150);
-ctx.fillRect(i*50 + bgx,200 + bgy,200,10);
 }
 
 
-//Player
-ctx.fillStyle = "#fc03df";
-ctx.fillRect(300, 300, 50, 50);
 
-//Prototype render
- for(var i = 0; i < blockArray.length ; i++) {
-        ctx.fillStyle = "#fc0303"
-        blockArray[i].draw();
-        blockArray[i].move();
-    }
-
-//Controls
-if (keys[39] == true){bgx = bgx - speed;} //Right
-
-if (keys[37] == true){bgx = bgx + speed;} //Left
-
-if (keys[38] == true){jump = true; myMusic.play();} //Up
+function sound(src) {
 
 
-bgy = bgy - 10;
+   this.sound = document.createElement("audio");
 
-if (bgy < 0){
-bgy = 0;
+
+   this.sound.src = src;
+
+
+   this.sound.setAttribute("preload", "auto");
+
+
+   this.sound.setAttribute("controls", "none");
+
+
+   this.sound.style.display = "none";
+
+
+   document.body.appendChild(this.sound);
+
+
+   this.play = function(){
+
+
+       this.sound.play();
+
+
+   }
+
+
+   this.stop = function(){
+
+
+       this.sound.pause();
+
+
+   }   
+
+
 }
 
-if (jump == true){bgy = bgy + acc; acc = acc - 0.6; if (acc < 0){jump = false; acc = 23;}}
 
+
+
+
+
+var c = document.getElementById("myCanvas");
+
+
+ 
+
+
+var ctx = c.getContext("2d");
+
+
+var w = window.innerWidth;
+
+
+var h = window.innerHeight;
+
+
+
+
+
+
+c.width  = w;
+
+
+c.height = h;
+
+
+var scalew = (w/800);
+
+
+var scaleh = (h-30)/(400);
+
+
+ctx.scale(scalew,scaleh);
+
+
+window.onresize = function(event) {
+
+
+w = window.innerWidth;
+
+
+h = window.innerHeight;
+
+
+
+
+
+
+scalew = (w/800);
+
+
+scaleh = (h-30)/(400);
+
+
+c.width  = w;
+
+
+c.height = h;
+
+
+ctx.scale(scalew,scaleh);
+
+
+};
+
+
+var framesArr = ["https://i.ibb.co/GJpp0Ch/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-1.png","https://i.ibb.co/9tn2b8d/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-2.png","https://i.ibb.co/jHy99Vs/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-3.png","https://i.ibb.co/v3pnpGb/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-4.png","https://i.ibb.co/Ykm2Lb3/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-5.png","https://i.ibb.co/p1gYtzn/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-6.png","https://i.ibb.co/ZM6wkWc/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-7.png","https://i.ibb.co/rt3xR6j/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-8.png","https://i.ibb.co/hC8gLnm/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-9.png","https://i.ibb.co/3y53sjn/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-10.png","https://i.ibb.co/Nmd3pHV/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-11.png","https://i.ibb.co/h2yvpn4/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-12.png","https://i.ibb.co/Z2kLvTQ/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-13.png","https://i.ibb.co/G0BSn19/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-14.png","https://i.ibb.co/1KHR151/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-15.png"]
+
+
+var noob = 0;
+
+
+var plyr = document.getElementById("player");
+
+
+function move() {
+
+
+//Background Image
+
+
+var bgimg = document.getElementById("grassland");
+
+
+ctx.drawImage(bgimg, 0, 0,800,400);
+
+
+	
+
+
+ctx.drawImage(plyr, 300 + noob, 200,200,200);
+
+
+if (noob > 100){noob = 0;}
+
+
+noob = noob + 1;
+
+
+}//End of FUNCTION
+
+
+//Move events
 
 
 document.onkeydown = function(e) {
-		keys[e.keyCode] = true;
-} 
 
-document.onkeyup = function(e) {
-		keys[e.keyCode] = false;
-}
-	
-ctx.font = "30px Arial";
-ctx.fillText("bgy: " + bgy, 10, 50);
-ctx.fillText("hit: " + hit, 400, 50);
 
-}//End of FUNCTION
- 
+
+
+
+
+}//End of keydown function
+
+
+
+
+
+
+ document.onkeyup = function(e) {
+
+
+
+
+
+
+ }
+
+
 </script>
 
 
+
+
+
+
+
+
+
+
+
+
 </body>
+
+
 </html>
+
