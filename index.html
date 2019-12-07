@@ -41,7 +41,8 @@ function sound(src) {
         this.sound.play();
     }
     this.stop = function(){
-        this.sound.pause();
+        //this.sound.pause();
+	this.sound.currentTime = 0;
     }    
 }
 
@@ -98,7 +99,7 @@ block.prototype.draw = function() {
     
     
     if (this.x + bgx < 350 && this.x + this.w + bgx > 350){
-    	if (this.y + bgy < 350 && this.y + bgy + this.h > 340){bgx = 0;}
+    	if (this.y + bgy < 350 && this.y + bgy + this.h > 340){myMusic.stop(); bgx = 0;}
     } //Approach from right
     
     
