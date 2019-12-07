@@ -27,8 +27,7 @@ html, body {
 <script>
 var myVar = setInterval(move, 20);
 function clickfunc(){
-myMusic = new sound("gametheme.mp3");
-myMusic.play();
+myMusic = new sound("saturn.mp3");
 }
 function sound(src) {
     this.sound = document.createElement("audio");
@@ -108,8 +107,7 @@ block.prototype.draw = function() {
     	if (this.y + bgy > 350 && this.y + bgy < 360){bgy = bgy + 10;}
     } //Approach from top
     
-    
-   
+  
     
     //ctx.font = "30px Arial";
     //ctx.fillText(this.x + bgx - 350, 200, 50);
@@ -143,7 +141,8 @@ var bgimg = document.getElementById("grassland");
 //ctx.drawImage(plyr, 300 + noob, 200,200,200);
 
 //Speed
-//bgx = bgx - 5;
+bgx = bgx - 5;
+myMusic.play();
 
 //background
 ctx.fillStyle = "#2ae8d5";
