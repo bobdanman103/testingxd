@@ -28,6 +28,7 @@ html, body {
 var myVar = setInterval(move, 20);
 function clickfunc(){
 myMusic = new sound("saturn.mp3");
+myMusic.play();
 }
 function sound(src) {
     this.sound = document.createElement("audio");
@@ -142,7 +143,6 @@ var bgimg = document.getElementById("grassland");
 
 //Speed
 bgx = bgx - 5;
-myMusic.play();
 
 //background
 ctx.fillStyle = "#2ae8d5";
