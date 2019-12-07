@@ -30,7 +30,6 @@ var myVar = setInterval(move, 20);
 function clickfunc(){
 myMusic = new sound("gametheme.mp3");
 myMusic.play();
-
 }
 function sound(src) {
     this.sound = document.createElement("audio");
@@ -100,12 +99,9 @@ block.prototype.draw = function() {
     
     
     if (this.x + bgx < 350 && this.x + this.w + bgx > 350){
-    	if (this.y + bgy < 350 && this.y + bgy + this.h > 340){bgx = bgx + speed;}
+    	if (this.y + bgy < 350 && this.y + bgy + this.h > 340){bgx = 0;}
     } //Approach from right
     
-     if (this.x + bgx + this.w > 300 && this.x + bgx < 300){
-    	if (this.y + bgy < 350 && this.y + bgy + this.h > 340){bgx = bgx - speed;}
-    } //Approach from left
     
      
     if (this.x + bgx < 350 && this.x + this.w + bgx > 320){
@@ -142,10 +138,12 @@ blockArray.push(new block(600, 260,120,90));
 function move() {
 //Background Image
 var bgimg = document.getElementById("grassland");
-//ctx.drawImage(bgimg, 0, -400,1600,800);
+//ctx.drawImage(bgimg, 0, 0,1600,800);
 	
 //ctx.drawImage(plyr, 300 + noob, 200,200,200);
 
+//Speed
+//bgx = bgx - 5;
 
 //background
 ctx.fillStyle = "#2ae8d5";
