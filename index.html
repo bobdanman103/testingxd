@@ -26,9 +26,11 @@ html, body {
 
 
 <script>
+var clickos = false;
 var myVar = setInterval(move, 20);
 function clickfunc(){
-myMusic = new sound("gametheme.mp3");
+clickos = true; 
+myMusic = new sound("saturn.mp3");
 myMusic.play();
 
 }
@@ -145,6 +147,9 @@ var bgimg = document.getElementById("grassland");
 
 //Speed
 bgx = bgx - 5;
+	
+if (clickos == true){
+myMusic.play();}
 
 //background
 ctx.fillStyle = "#2ae8d5";
