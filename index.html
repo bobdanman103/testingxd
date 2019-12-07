@@ -47,6 +47,7 @@ html, body {
 var myVar = setInterval(move, 20);
 function clickfunc(){
 myMusic = new sound("saturn.mp3");
+myMusic2 = new sound("jump.mp3");
 }
 function sound(src) {
     this.sound = document.createElement("audio");
@@ -124,7 +125,7 @@ var swordhit14 = document.getElementById("swordhit14");
 //38 up
 //32 space
 myMusic.play()
-
+myMusic2.play()
 
 if (action == "idle"){
 ctx.drawImage(plyr, x, y,240,200);}
