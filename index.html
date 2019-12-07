@@ -14,12 +14,10 @@ html, body {
 </canvas>
 <img id="grassland"  style="visibility:hidden" src="https://i.ibb.co/HPcgvQ3/New-Project-7.png" alt="">
 <img id="player"  style="visibility:hidden" src="https://i.ibb.co/GJpp0Ch/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-1.png" alt="">
-
-
 <script>
 var myVar = setInterval(move, 20);
 function clickfunc(){
-myMusic = new sound("saturn.mp3");
+	myMusic = new sound("saturn.mp3");
 myMusic.play();
 }
 function sound(src) {
@@ -57,7 +55,6 @@ ctx.scale(scalew,scaleh);
 var framesArr = ["https://i.ibb.co/GJpp0Ch/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-1.png","https://i.ibb.co/9tn2b8d/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-2.png","https://i.ibb.co/jHy99Vs/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-3.png","https://i.ibb.co/v3pnpGb/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-4.png","https://i.ibb.co/Ykm2Lb3/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-5.png","https://i.ibb.co/p1gYtzn/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-6.png","https://i.ibb.co/ZM6wkWc/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-7.png","https://i.ibb.co/rt3xR6j/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-8.png","https://i.ibb.co/hC8gLnm/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-9.png","https://i.ibb.co/3y53sjn/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-10.png","https://i.ibb.co/Nmd3pHV/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-11.png","https://i.ibb.co/h2yvpn4/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-12.png","https://i.ibb.co/Z2kLvTQ/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-13.png","https://i.ibb.co/G0BSn19/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-14.png","https://i.ibb.co/1KHR151/dahb9zb-cc10c229-66f9-4995-b018-207805bed26b-15.png"]
 var noob = 0;
 var plyr = document.getElementById("player");
-	
 function move() {
 //Background Image
 var bgimg = document.getElementById("grassland");
