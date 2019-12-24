@@ -223,16 +223,16 @@ var Ground = function(x, y, w, h) {
     this.y = y;
     this.w = w;
     this.h = h;
-    this.imgSize = ground.naturalWidth;
     this.destSize = 100;
 };
 
 Ground.prototype.draw = function() {
 	ctx.fillRect(this.x, this.y, this.w, this.h);
     
+    var imgSize = ground.naturalWidth;
     var marginX = this.w % this.destSize;
     var marginY = this.h % this.destSize;
-    var scale = this.imgSize / this.destSize;
+    var scale = imgSize / this.destSize;
 
 	for(var i = 0; i < this.w - marginX; i += this.destSize) {
     	for(var j = 0; j < this.h - marginY; j += this.destSize) {
