@@ -7,325 +7,6 @@ html, body {
     overflow: hidden; 
     width: 100%; /* restrict the page width to viewport */
 }
-<!DOCTYPE html>
-<html>
-
-<head>
-<style>
-html, body {
-    overflow: hidden; 
-    width: 100%; /* restrict the page width to viewport */
-}
-
-canvas {
-	border: 1px solid #d3d3d3;
-}
-</style>
-</head>
-<body onLoad = "startGame()">
-
-<img id="idle" style="visibility:hidden" src="https://i.imgur.com/ScWrY9L.png" alt=>
-<img id="idleleft" style="visibility:hidden" src="https://i.imgur.com/3OMr9RJ.png" alt=>
-
-<img id="walk1" style="visibility:hidden" src="https://i.imgur.com/QwQ7Bex.png" alt=>
-<img id="walk2" style="visibility:hidden" src="https://i.imgur.com/0b8nTss.png" alt=>
-<img id="walk3" style="visibility:hidden" src="https://i.imgur.com/1EJ2LFC.png" alt=>
-<img id="walk4" style="visibility:hidden" src="https://i.imgur.com/RRKJIbv.png" alt=>
-<img id="walk5" style="visibility:hidden" src="https://i.imgur.com/PEHO2Jk.png" alt=>
-<img id="walk6" style="visibility:hidden" src="https://i.imgur.com/OM6rtK8.png" alt=>
-
-<img id="walkleft1" style="visibility:hidden" src="https://i.imgur.com/JcIMwKe.png" alt=>
-<img id="walkleft2" style="visibility:hidden" src="https://i.imgur.com/1QeNETm.png" alt=>
-<img id="walkleft3" style="visibility:hidden" src="https://i.imgur.com/BlnytJg.png" alt=>
-<img id="walkleft4" style="visibility:hidden" src="https://i.imgur.com/40NP82x.png" alt=>
-<img id="walkleft5" style="visibility:hidden" src="https://i.imgur.com/iaMW4Zu.png" alt=>
-<img id="walkleft6" style="visibility:hidden" src="https://i.imgur.com/CB43LGw.png" alt=>
-
-<img id="jump" style="visibility:hidden" src="https://i.imgur.com/bekSaHI.png" alt=>
-<img id="jumpleft" style="visibility:hidden" src="https://i.imgur.com/qXPa5zy.png" alt=>
-
-<img id="ground" style="visibility:hidden" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFgfqQAqGGNImMnTR9WrmoUMNIoKZXkXC3xSggNJkP-9-bklWt0g&s" alt=>
-
-<img id="bg" style="visibility:hidden" src="https://i.pinimg.com/originals/b1/da/c0/b1dac0470bdf2f7cc0c559599fba19f9.jpg" alt=>
-
-<script>
-function startGame() {
-	myGameArea.start();
-};
-
-var myGameArea = {
-	canvas: document.createElement("canvas"),
-    start: function() {
-    	this.keys = [];
-    	this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-        this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 20);
-        window.addEventListener('keydown', function(e) {
-            myGameArea.keys[e.keyCode] = true;
-        })
-        window.addEventListener('keyup', function(e) {
-        	myGameArea.keys[e.keyCode] = false; 
-        })
-    },
-    
-    clear: function() {
-    	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    },
-};
-
-var Character = function(x, y, w, h) {
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.h = h;
-    
-    this.prevx = x;
-    this.prevy = y;
-    this.vx = 5;
-    this.onGround = true;
-    
-    this.action = "idle";
-    this.actionTimer = 0;
-    
-    //variables that alter vy
-    this.vy = 0;
-    this.viy = 10;
-    this.g = 0.4;
-};
-
-Character.prototype.move = function() {
-	this.prevx = this.x;
-	this.prevy = this.y;
-    
-    if((myGameArea.keys[37] && myGameArea.keys[39]) || (!myGameArea.keys[37] && !myGameArea.keys[39])) {
-    	if(this.action === "right") {
-        	this.action = "idle";
-            this.actionTimer = 0;
-        }
-        if(this.action === "left") {
-        	this.action = "idleleft";
-            this.actionTimer = 0;
-        }
-    }
-    else if(myGameArea.keys[39]) {
-    	this.x += this.vx;
-        this.action = "right";
-    }
-    else if(myGameArea.keys[37]) {
-        this.x -= this.vx;
-        this.action = "left";
-    }
-    
-    if(myGameArea.keys[38] && this.onGround) {
-    	this.vy = -this.viy;
-        !this.onGround;
-    }
-    
-    //falling code even if on ground (autocorrects itself)
-    this.vy += this.g;
-    this.y += this.vy;
-};
-
-Character.prototype.inXRange = function(i) {
-	if(this.x + this.w > grounds[i].x && this.x < grounds[i].x + grounds[i].w) {
-        return true;
-    }
-    else {
-        return false;
-    }
-};
-
-Character.prototype.inYRange = function(i) {
-    if(this.y < grounds[i].y + grounds[i].h && this.y + this.h > grounds[i].y) {
-        return true;
-    }
-    else {
-        return false;
-    }
-};
-
-Character.prototype.checkFloor = function(){
-    detectGround = false;
-    for(var i = 0; i < grounds.length; i++) {
-        if(this.inXRange(i) && this.prevy + this.h <= grounds[i].y && this.y + this.h > grounds[i].y){
-            this.y = grounds[i].y - this.h;
-            this.vy = 0;
-            this.onGround = true;
-            detectGround = true;
-        }
-    }
-    
-    if(!detectGround){
-        this.onGround = false;
-    }
-};
-
-Character.prototype.checkCeiling = function() {
-    for(var i = 0; i < grounds.length; i++){
-        if(this.inXRange(i) && this.prevy >= grounds[i].y + grounds[i].h && this.y < grounds[i].y + grounds[i].h){
-            this.y = grounds[i].y + grounds[i].h;
-            this.vy = 0;
-        }
-    }
-};
-
-Character.prototype.checkSides = function() {
-    for(var i = 0; i < grounds.length; i++){
-        if(this.inYRange(i) && this.prevx + this.w <= grounds[i].x && this.x + this.w > grounds[i].x){
-            this.x = grounds[i].x - this.w;
-        }
-        if(this.inYRange(i) && this.prevx >= grounds[i].x + grounds[i].w && this.x < grounds[i].x + grounds[i].w){
-            this.x = grounds[i].x + grounds[i].w;
-        }
-    }
-};
-
-Character.prototype.draw = function() {
-	if(!this.onGround) {
-    	if(this.action === "right" || this.action === "idle") {ctx.drawImage(jump, this.x, this.y, this.w, this.h);}
-        if(this.action === "left" || this.action === "idleleft") {ctx.drawImage(jumpleft, this.x, this.y, this.w, this.h);}
-        return;
-    }
-    
-	if(this.action === "idle") {
-    	ctx.drawImage(idle, this.x, this.y, this.w, this.h);
-        return;
-    }
-    
-    if(this.action === "idleleft") {
-    	ctx.drawImage(idleleft, this.x, this.y, this.w, this.h);
-        return;
-    }
-    
-    if (this.action == "right"){
-		this.actionTimer += 1;
-        if (this.actionTimer === 30) {this.actionTimer = 0;}
-
-		if (this.actionTimer < 5){ctx.drawImage(walk1, this.x, this.y, this.w, this.h);}
-        else if (this.actionTimer < 10){ctx.drawImage(walk2, this.x, this.y, this.w, this.h);}
-        else if (this.actionTimer < 15){ctx.drawImage(walk3, this.x, this.y, this.w, this.h);}
-        else if (this.actionTimer < 20){ctx.drawImage(walk4, this.x, this.y, this.w, this.h);}
-        else if (this.actionTimer < 25){ctx.drawImage(walk5, this.x, this.y, this.w, this.h);}
-        else if (this.actionTimer < 30){ctx.drawImage(walk6, this.x, this.y, this.w, this.h);}
-        return;
-	}
-    
-    if (this.action == "left"){
-		this.actionTimer += 1;
-        if (this.actionTimer === 30) {this.actionTimer = 0;}
-
-		if (this.actionTimer < 5){ctx.drawImage(walkleft1, this.x, this.y, this.w, this.h);}
-        else if (this.actionTimer < 10){ctx.drawImage(walkleft2, this.x, this.y, this.w, this.h);}
-        else if (this.actionTimer < 15){ctx.drawImage(walkleft3, this.x, this.y, this.w, this.h);}
-        else if (this.actionTimer < 20){ctx.drawImage(walkleft4, this.x, this.y, this.w, this.h);}
-        else if (this.actionTimer < 25){ctx.drawImage(walkleft5, this.x, this.y, this.w, this.h);}
-        else if (this.actionTimer < 30){ctx.drawImage(walkleft6, this.x, this.y, this.w, this.h);}
-        return;
-	}
-};
-
-var Ground = function(x, y, w, h) {
-	this.x = x;
-    this.y = y;
-    this.w = w;
-    this.h = h;
-    this.destSize = 100;
-};
-
-Ground.prototype.draw = function() {
-	ctx.fillRect(this.x, this.y, this.w, this.h);
-    
-    var imgSize = ground.naturalWidth;
-    var marginX = this.w % this.destSize;
-    var marginY = this.h % this.destSize;
-    var scale = imgSize / this.destSize;
-
-	for(var i = 0; i < this.w - marginX; i += this.destSize) {
-    	for(var j = 0; j < this.h - marginY; j += this.destSize) {
-        	ctx.drawImage(ground, this.x + i, this.y + j, this.destSize, this.destSize);
-        }
-    }
-    
-    //going vertically
-    for(var j = 0; j < this.h - marginY; j += this.destSize) {
-    	var w = marginX;
-        var h = this.destSize;
-    	ctx.drawImage(ground, 0, 0, w * scale, h * scale, this.x + this.w - marginX, this.y + j, w, h);
-    }
-    
-    //going horizontally
-    for(var i = 0; i < this.w - marginX; i += this.destSize) {
-    	var w = this.destSize;
-        var h = marginY;
-    	ctx.drawImage(ground, 0, 0, w * scale, h * scale, this.x + i, this.y + this.h - marginY, this.destSize, marginY);
-    }
-    
-    //that last square
-    var w = marginX;
-    var h = marginY;
-    ctx.drawImage(ground, 0, 0, w * scale, h * scale, this.x + this.w - marginX, this.y + this.h - marginY, marginX, marginY);
-};
-
-var grounds = [];
-grounds.push(new Ground(100, -350, 250, 250));
-
-grounds.push(new Ground(0, 0, 2500, 300));
-grounds.push(new Ground(600, -100, 100, 100));
-grounds.push(new Ground(700, -200, 100, 200));
-grounds.push(new Ground(800, -300, 100, 300));
-grounds.push(new Ground(900, -400, 100, 400));
-
-grounds.push(new Ground(1300, -100, 100, 100));
-grounds.push(new Ground(1400, -200, 100, 200));
-grounds.push(new Ground(1500, -300, 100, 300));
-grounds.push(new Ground(1600, -400, 100, 400));
-grounds.push(new Ground(1700, -300, 100, 300));
-grounds.push(new Ground(1800, -200, 100, 200));
-grounds.push(new Ground(1900, -100, 100, 100));
-
-grounds.push(new Ground(-100, 400, 2700, 300));
-grounds.push(new Ground(-300, 300, 100, 100));
-grounds.push(new Ground(-500, 200, 100, 100));
-grounds.push(new Ground(-700, 100, 100, 100));
-grounds.push(new Ground(-900, 0, 100, 100));
-grounds.push(new Ground(-1100, -100, 100, 100));
-grounds.push(new Ground(-1300, -200, 100, 100));
-grounds.push(new Ground(-1500, -300, 100, 100));
-grounds.push(new Ground(-1600, -400, 100, 100));
-grounds.push(new Ground(-1400, -500, 1500, 100));
-grounds.push(new Ground(-100, -200, 100, 200));
-
-var pWidth = 40;
-var pHeight = 98;
-var p = new Character(0, -pHeight, pWidth, pHeight);
-
-function updateGameArea() {
-	ctx = myGameArea.context;
-	myGameArea.clear();
-    ctx.drawImage(bg, 0, 0, window.innerWidth, window.innerHeight);
-    
-    p.move();
-    p.checkFloor();
-    p.checkCeiling();
-    p.checkSides();
-    
-    ctx.save();
-    ctx.translate(-p.x, -p.y);
-    ctx.translate(window.innerWidth / 2, window.innerHeight / 2);
-    p.draw();
-    for(var i = 0; i < grounds.length; i++) {
-        grounds[i].draw();
-    }
-    ctx.restore();
-};
-</script>
-</body>
-
-</html>
-
-
 
 canvas {
 	border: 1px solid #d3d3d3;
@@ -385,6 +66,28 @@ var myGameArea = {
     	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     },
 };
+
+var idle = document.getElementById("idle");
+var idleleft = document.getElementById("idleleft");
+
+var walk1 = document.getElementById("walk1");
+var walk2 = document.getElementById("walk2");
+var walk3 = document.getElementById("walk3");
+var walk4 = document.getElementById("walk4");
+var walk5 = document.getElementById("walk5");
+var walk6 = document.getElementById("walk6");
+
+var walkleft1 = document.getElementById("walkleft1");
+var walkleft2 = document.getElementById("walkleft2");
+var walkleft3 = document.getElementById("walkleft3");
+var walkleft4 = document.getElementById("walkleft4");
+var walkleft5 = document.getElementById("walkleft5");
+
+var jump = document.getElementById("jump");
+var jumpleft = document.getElementById("jumpleft");
+
+var ground = document.getElementById("ground");
+var bg = document.getElementById("bg");
 
 var Character = function(x, y, w, h) {
     this.x = x;
